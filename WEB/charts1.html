@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant Dashboard - Charts</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #fefcf9;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      max-width: 1200px;
+    }
+
+    h2, h4 {
+      color: #5a3e36;
+    }
+
+    .chart-card {
+      background-color: #fffaf5;
+      border: 1px solid #e2d6c2;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    canvas {
+      max-height: 300px;
+    }
+
+    .section-title {
+      border-bottom: 2px solid #e2d6c2;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+
+    .info-dropdown {
+      margin-top: 15px;
+    }
+
+    .info-dropdown .btn {
+      background-color: #e2d6c2;
+      color: #4b3621;
+    }
+
+    .info-dropdown .dropdown-menu {
+      background-color: #fff9f0;
+      border: 1px solid #e2d6c2;
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">📊 Restaurant Dashboard - Analytics</h2>
+
+    <div class="row">
+      <!-- Chart 1 -->
+      <div class="col-md-6">
+        <div class="chart-card">
+          <h4 class="section-title">Total Amount per Order</h4>
+          <canvas id="ordersChart"></canvas>
+          <div class="info-dropdown dropdown">
+            <button class="btn dropdown-toggle" data-bs-toggle="dropdown">Chart Info</button>
+            <ul class="dropdown-menu p-3">
+              <li>This chart shows the total sales amount associated with each order. Useful for tracking high-value customers.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 2 -->
+      <div class="col-md-6">
+        <div class="chart-card">
+          <h4 class="section-title">Menu Item Price Distribution</h4>
+          <canvas id="menuItemsChart"></canvas>
+          <div class="info-dropdown dropdown">
+            <button class="btn dropdown-toggle" data-bs-toggle="dropdown">Chart Info</button>
+            <ul class="dropdown-menu p-3">
+              <li>Visualizes the proportion of menu items by price to identify high-cost or low-cost food categories.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 3 -->
+      <div class="col-md-6">
+        <div class="chart-card">
+          <h4 class="section-title">Reservations Over Time</h4>
+          <canvas id="reservationsChart"></canvas>
+          <div class="info-dropdown dropdown">
+            <button class="btn dropdown-toggle" data-bs-toggle="dropdown">Chart Info</button>
+            <ul class="dropdown-menu p-3">
+              <li>Tracks how many reservations were made each day, helping spot peak business periods.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 4 -->
+      <div class="col-md-6">
+        <div class="chart-card">
+          <h4 class="section-title">Review Ratings</h4>
+          <canvas id="reviewsChart"></canvas>
+          <div class="info-dropdown dropdown">
+            <button class="btn dropdown-toggle" data-bs-toggle="dropdown">Chart Info</button>
+            <ul class="dropdown-menu p-3">
+              <li>Shows how customers are rating their experience, useful for tracking satisfaction trends.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 5 -->
+      <div class="col-md-6">
+        <div class="chart-card">
+          <h4 class="section-title">Payment Method Usage</h4>
+          <canvas id="paymentsChart"></canvas>
+          <div class="info-dropdown dropdown">
+            <button class="btn dropdown-toggle" data-bs-toggle="dropdown">Chart Info</button>
+            <ul class="dropdown-menu p-3">
+              <li>Displays how customers are paying — cash, credit, or digital — useful for optimizing checkout systems.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 6 -->
+      <div class="col-md-6">
+        <div class="chart-card">
+          <h4 class="section-title">Menu Items by Price Range</h4>
+          <canvas id="priceRangeChart"></canvas>
+          <div class="info-dropdown dropdown">
+            <button class="btn dropdown-toggle" data-bs-toggle="dropdown">Chart Info</button>
+            <ul class="dropdown-menu p-3">
+              <li>Categorizes menu items into price tiers to analyze affordability and pricing strategy.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS CHARTS -->
+  <script>
+    function mockFetch(endpoint) {
+      const data = {
+        '/orders': [
+          { order_id: 'ORD001', total_amount: '120.50' },
+          { order_id: 'ORD002', total_amount: '89.00' },
+          { order_id: 'ORD003', total_amount: '143.75' }
+        ],
+        '/menuitems': [
+          { name: 'Pizza', price: '12.99' },
+          { name: 'Burger', price: '9.99' },
+          { name: 'Pasta', price: '14.99' },
+          { name: 'Salad', price: '8.49' },
+          { name: 'Steak', price: '24.99' },
+          { name: 'Soda', price: '2.49' }
+        ],
+        '/reservations': [
+          { reservation_date: '2025-06-01' },
+          { reservation_date: '2025-06-01' },
+          { reservation_date: '2025-06-02' },
+          { reservation_date: '2025-06-03' },
+          { reservation_date: '2025-06-03' },
+          { reservation_date: '2025-06-03' }
+        ],
+        '/reviews': [
+          { rating: 5 }, { rating: 4 }, { rating: 5 },
+          { rating: 3 }, { rating: 4 }, { rating: 2 },
+          { rating: 1 }, { rating: 5 }
+        ],
+        '/payments': [
+          { payment_method: 'Credit Card' },
+          { payment_method: 'Cash' },
+          { payment_method: 'Mobile Pay' },
+          { payment_method: 'Credit Card' },
+          { payment_method: 'Credit Card' },
+          { payment_method: 'Cash' }
+        ]
+      };
+      return Promise.resolve({ json: () => Promise.resolve(data[endpoint]) });
+    }
+
+    // Chart 1: Orders
+    mockFetch('/orders').then(res => res.json()).then(data => {
+      const labels = data.map(o => o.order_id);
+      const totals = data.map(o => parseFloat(o.total_amount));
+      new Chart(document.getElementById('ordersChart'), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Total ($)',
+            data: totals,
+            backgroundColor: 'rgba(92, 64, 51, 0.7)'
+          }]
+        }
+      });
+    });
+
+    // Chart 2: Menu Item Prices
+    mockFetch('/menuitems').then(res => res.json()).then(data => {
+      const labels = data.map(i => i.name);
+      const prices = data.map(i => parseFloat(i.price));
+      new Chart(document.getElementById('menuItemsChart'), {
+        type: 'pie',
+        data: {
+          labels,
+          datasets: [{
+            data: prices,
+            backgroundColor: ['#FFB347', '#FF6961', '#6B8E23', '#87CEFA', '#C39BD3', '#FAD7A0']
+          }]
+        }
+      });
+    });
+
+    // Chart 3: Reservations Over Time
+    mockFetch('/reservations').then(res => res.json()).then(data => {
+      const dateMap = {};
+      data.forEach(r => {
+        dateMap[r.reservation_date] = (dateMap[r.reservation_date] || 0) + 1;
+      });
+      const labels = Object.keys(dateMap).sort();
+      const counts = labels.map(date => dateMap[date]);
+      new Chart(document.getElementById('reservationsChart'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Reservations',
+            data: counts,
+            borderColor: '#8B4513',
+            backgroundColor: '#f2e3d5',
+            fill: true,
+            tension: 0.4
+          }]
+        }
+      });
+    });
+
+    // Chart 4: Review Ratings
+    mockFetch('/reviews').then(res => res.json()).then(data => {
+      const counts = [0, 0, 0, 0, 0];
+      data.forEach(r => {
+        if (r.rating >= 1 && r.rating <= 5) counts[r.rating - 1]++;
+      });
+      new Chart(document.getElementById('reviewsChart'), {
+        type: 'bar',
+        data: {
+          labels: ['1★', '2★', '3★', '4★', '5★'],
+          datasets: [{
+            label: 'Review Count',
+            data: counts,
+            backgroundColor: 'rgba(255, 165, 0, 0.7)'
+          }]
+        }
+      });
+    });
+
+    // Chart 5: Payment Methods
+    mockFetch('/payments').then(res => res.json()).then(data => {
+      const methodMap = {};
+      data.forEach(p => {
+        const m = p.payment_method || 'Unknown';
+        methodMap[m] = (methodMap[m] || 0) + 1;
+      });
+      const labels = Object.keys(methodMap);
+      const values = labels.map(m => methodMap[m]);
+      new Chart(document.getElementById('paymentsChart'), {
+        type: 'doughnut',
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            backgroundColor: ['#6B4226', '#F7C59F', '#E59866', '#F0E68C']
+          }]
+        }
+      });
+    });
+
+    // Chart 6: Menu Items by Price Range
+    mockFetch('/menuitems').then(res => res.json()).then(data => {
+      const ranges = { 'Under $5': 0, '$5–9.99': 0, '$10–19.99': 0, '$20+': 0 };
+      data.forEach(i => {
+        const price = parseFloat(i.price);
+        if (price < 5) ranges['Under $5']++;
+        else if (price < 10) ranges['$5–9.99']++;
+        else if (price < 20) ranges['$10–19.99']++;
+        else ranges['$20+']++;
+      });
+      new Chart(document.getElementById('priceRangeChart'), {
+        type: 'bar',
+        data: {
+          labels: Object.keys(ranges),
+          datasets: [{
+            label: 'Item Count',
+            data: Object.values(ranges),
+            backgroundColor: '#A0522D'
+          }]
+        }
+      });
+    });
+  </script>
+
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('navbar-container').innerHTML = html);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

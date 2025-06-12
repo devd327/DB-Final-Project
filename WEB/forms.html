@@ -1,0 +1,307 @@
+<!-- Full Restaurant Forms for SQL3 Schema -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant Database - Add Records</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="navbar-container"></div>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Add New Records</h2>
+
+    <!-- Customer Form -->
+    <form id="customerForm" class="border p-4 rounded bg-light mb-4">
+      <h4>Customer</h4>
+      <div class="mb-3">
+        <label for="customer_id" class="form-label">Customer ID</label>
+        <input type="text" class="form-control" id="customer_id" required />
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" required />
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="phone" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" required />
+      </div>
+      <button type="submit" class="btn btn-success">Add Customer</button>
+      <div id="customerMsg" class="mt-2"></div>
+    </form>
+
+    <!-- Table Form -->
+    <form id="tableForm" class="border p-4 rounded bg-light mb-4">
+      <h4>Table</h4>
+      <div class="mb-3">
+        <label for="table_id" class="form-label">Table ID</label>
+        <input type="text" class="form-control" id="table_id" required />
+      </div>
+      <div class="mb-3">
+        <label for="table_number" class="form-label">Table Number</label>
+        <input type="number" class="form-control" id="table_number" required />
+      </div>
+      <div class="mb-3">
+        <label for="capacity" class="form-label">Capacity</label>
+        <input type="number" class="form-control" id="capacity" required />
+      </div>
+      <button type="submit" class="btn btn-success">Add Table</button>
+      <div id="tableMsg" class="mt-2"></div>
+    </form>
+
+    <!-- MenuItems Form -->
+<form id="menuItemsForm" class="border p-4 rounded bg-light mb-4">
+  <h4>Menu Item</h4>
+  <div class="mb-3">
+    <label for="item_id" class="form-label">Item ID</label>
+    <input type="text" class="form-control" id="item_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="item_name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="item_name" required />
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control" id="description" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="price" class="form-label">Price</label>
+    <input type="number" step="0.01" class="form-control" id="price" required />
+  </div>
+  <button type="submit" class="btn btn-success">Add Menu Item</button>
+  <div id="menuItemsMsg" class="mt-2"></div>
+</form>
+
+<!-- Orders Form -->
+<form id="ordersForm" class="border p-4 rounded bg-light mb-4">
+  <h4>Order</h4>
+  <div class="mb-3">
+    <label for="order_id" class="form-label">Order ID</label>
+    <input type="text" class="form-control" id="order_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="order_customer_id" class="form-label">Customer ID</label>
+    <input type="text" class="form-control" id="order_customer_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="order_table_id" class="form-label">Table ID</label>
+    <input type="text" class="form-control" id="order_table_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="total_amount" class="form-label">Total Amount</label>
+    <input type="number" step="0.01" class="form-control" id="total_amount" required />
+  </div>
+  <button type="submit" class="btn btn-success">Add Order</button>
+  <div id="ordersMsg" class="mt-2"></div>
+</form>
+
+<!-- OrderDetails Form -->
+<form id="orderDetailsForm" class="border p-4 rounded bg-light mb-4">
+  <h4>Order Detail</h4>
+  <div class="mb-3">
+    <label for="order_detail_id" class="form-label">Order Detail ID</label>
+    <input type="text" class="form-control" id="order_detail_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="detail_order_id" class="form-label">Order ID</label>
+    <input type="text" class="form-control" id="detail_order_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="item_id_detail" class="form-label">Item ID</label>
+    <input type="text" class="form-control" id="item_id_detail" required />
+  </div>
+  <div class="mb-3">
+    <label for="quantity" class="form-label">Quantity</label>
+    <input type="number" class="form-control" id="quantity" required />
+  </div>
+  <div class="mb-3">
+    <label for="detail_price" class="form-label">Price</label>
+    <input type="number" step="0.01" class="form-control" id="detail_price" required />
+  </div>
+  <button type="submit" class="btn btn-success">Add Order Detail</button>
+  <div id="orderDetailsMsg" class="mt-2"></div>
+</form>
+
+<!-- Staff Form -->
+<form id="staffForm" class="border p-4 rounded bg-light mb-4">
+  <h4>Staff</h4>
+  <div class="mb-3">
+    <label for="staff_id" class="form-label">Staff ID</label>
+    <input type="text" class="form-control" id="staff_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="staff_name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="staff_name" required />
+  </div>
+  <div class="mb-3">
+    <label for="role" class="form-label">Role</label>
+    <input type="text" class="form-control" id="role" required />
+  </div>
+  <div class="mb-3">
+    <label for="staff_phone" class="form-label">Phone</label>
+    <input type="text" class="form-control" id="staff_phone" required />
+  </div>
+  <button type="submit" class="btn btn-success">Add Staff</button>
+  <div id="staffMsg" class="mt-2"></div>
+</form>
+
+<!-- Payments Form -->
+<form id="paymentsForm" class="border p-4 rounded bg-light mb-4">
+  <h4>Payment</h4>
+  <div class="mb-3">
+    <label for="payment_id" class="form-label">Payment ID</label>
+    <input type="text" class="form-control" id="payment_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="payment_order_id" class="form-label">Order ID</label>
+    <input type="text" class="form-control" id="payment_order_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="amount" class="form-label">Amount</label>
+    <input type="number" step="0.01" class="form-control" id="amount" required />
+  </div>
+  <div class="mb-3">
+    <label for="payment_method" class="form-label">Payment Method</label>
+    <input type="text" class="form-control" id="payment_method" required />
+  </div>
+  <div class="mb-3">
+    <label for="payment_date" class="form-label">Payment Date</label>
+    <input type="date" class="form-control" id="payment_date" required />
+  </div>
+  <button type="submit" class="btn btn-success">Add Payment</button>
+  <div id="paymentsMsg" class="mt-2"></div>
+</form>
+
+<!-- Reviews Form -->
+<form id="reviewsForm" class="border p-4 rounded bg-light mb-4">
+  <h4>Review</h4>
+  <div class="mb-3">
+    <label for="review_id" class="form-label">Review ID</label>
+    <input type="text" class="form-control" id="review_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="review_customer_id" class="form-label">Customer ID</label>
+    <input type="text" class="form-control" id="review_customer_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="review_text" class="form-label">Review</label>
+    <textarea class="form-control" id="review_text" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="rating" class="form-label">Rating (1-5)</label>
+    <input type="number" class="form-control" id="rating" min="1" max="5" required />
+  </div>
+  <div class="mb-3">
+    <label for="review_date" class="form-label">Review Date</label>
+    <input type="date" class="form-control" id="review_date" required />
+  </div>
+  <button type="submit" class="btn btn-success">Add Review</button>
+  <div id="reviewsMsg" class="mt-2"></div>
+</form>
+
+<!-- Discounts Form -->
+<form id="discountsForm" class="border p-4 rounded bg-light mb-4">
+  <h4>Discount</h4>
+  <div class="mb-3">
+    <label for="discount_id" class="form-label">Discount ID</label>
+    <input type="text" class="form-control" id="discount_id" required />
+  </div>
+  <div class="mb-3">
+    <label for="code" class="form-label">Code</label>
+    <input type="text" class="form-control" id="code" required />
+  </div>
+  <div class="mb-3">
+    <label for="discount_description" class="form-label">Description</label>
+    <textarea class="form-control" id="discount_description" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="percentage" class="form-label">Percentage</label>
+    <input type="number" step="0.01" class="form-control" id="percentage" required />
+  </div>
+  <button type="submit" class="btn btn-success">Add Discount</button>
+  <div id="discountsMsg" class="mt-2"></div>
+</form>
+
+
+  </div>
+
+  <script>
+  const baseURL = 'https://friendly-robot-x5vpp74v6946c6w9j-6006.app.github.dev';
+
+  // Customer Form Submission
+  document.getElementById('customerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msgEl = document.getElementById('customerMsg');
+    const data = {
+      customer_id: document.getElementById('customer_id').value,
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      email: document.getElementById('email').value
+    };
+    try {
+      const res = await fetch(`${baseURL}/customers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const text = await res.text();
+      msgEl.innerText = res.ok ? '✅ Customer added!' : `❌ Error: ${text}`;
+      if (res.ok) e.target.reset();
+    } catch (err) {
+      msgEl.innerText = `❌ Request failed: ${err}`;
+    }
+  });
+
+  // Generic form handler
+  function handleFormSubmit(formId, fields, endpoint, msgId) {
+    document.getElementById(formId).addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msgEl = document.getElementById(msgId);
+      const data = {};
+      fields.forEach(f => data[f] = document.getElementById(f).value);
+      try {
+        const res = await fetch(`${baseURL}/${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const text = await res.text();
+        msgEl.innerText = res.ok ? `✅ Added successfully!` : `❌ Error: ${text}`;
+        if (res.ok) e.target.reset();
+      } catch (err) {
+        msgEl.innerText = `❌ Request failed: ${err}`;
+      }
+    });
+  }
+
+  // Form handlers for SQL3 tables
+  handleFormSubmit('menuItemsForm', ['item_id', 'item_name', 'description', 'price'], 'menuitems', 'menuItemsMsg');
+  handleFormSubmit('ordersForm', ['order_id', 'order_customer_id', 'order_table_id', 'total_amount'], 'orders', 'ordersMsg');
+  handleFormSubmit('orderDetailsForm', ['order_detail_id', 'detail_order_id', 'item_id_detail', 'quantity', 'detail_price'], 'orderdetails', 'orderDetailsMsg');
+  handleFormSubmit('staffForm', ['staff_id', 'staff_name', 'role', 'staff_phone'], 'staff', 'staffMsg');
+  handleFormSubmit('paymentsForm', ['payment_id', 'payment_order_id', 'amount', 'payment_method', 'payment_date'], 'payments', 'paymentsMsg');
+  handleFormSubmit('reviewsForm', ['review_id', 'review_customer_id', 'review_text', 'rating', 'review_date'], 'reviews', 'reviewsMsg');
+  handleFormSubmit('discountsForm', ['discount_id', 'code', 'discount_description', 'percentage'], 'discounts', 'discountsMsg');
+</script>
+
+
+    <nav>
+        <div id="navbar-container"></div>
+        <script>
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('navbar-container').innerHTML = html;
+                });
+        </script>
+    </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
